@@ -1,0 +1,317 @@
+html {
+
+    background: url(https://mblogthumb-phinf.pstatic.net/20110323_91/muzzee_13008792098823XfSF_JPEG/_DSC1202.jpg?type=w2) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+header {
+    width: 100%;
+    height: 100px;
+    padding-top: 1px;
+    box-sizing: border-box;
+
+}
+
+header h1 a {
+    text-decoration: none;
+    color: rgb(45, 48, 85);
+    font-size: larger;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+header h1 {
+    font-weight: bold;
+    background-color: #ffffff;
+    opacity: 0.5;
+}
+
+nav {
+    border-bottom: 1px solid gray;
+    text-align: right;
+}
+
+nav a {
+    text-decoration: none;
+    color: rgb(63, 67, 132);
+    font-weight: bold;
+}
+
+.con {
+    width: 100%;
+    height: 600px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+}
+
+.con .aside {
+    border-right: 1px solid gray;
+}
+
+.con .aside p {
+    color: rgb(188, 188, 199);
+    font-weight: bold;
+    font-size: large;
+}
+
+.con ol {
+    width: 100px;
+    margin: 0;
+    padding: 20px;
+    padding-left: 10px;
+}
+
+.con a {
+    color: black;
+    text-decoration: none;
+    font-size: larger;
+    font-weight: bold;
+}
+
+footer {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    border-top: 1px solid gray;
+}
+
+footer a {
+    text-decoration: none;
+    color: rgb(134, 137, 188)
+}
+
+footer p {
+
+    color: rgb(134, 137, 188)
+}
+
+.ListType {
+    width: 100%;
+    height: 70px;
+    padding-top: 1px;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 50px;
+}
+
+.ListType h1 {
+    font-size: x-large;
+    font-weight: bold;
+    color: rgb(188, 188, 199);
+}
+
+.primary {
+    overflow: auto;
+    scroll-snap-type: both mandatory;
+    height: 75vh;
+    padding: 20px;
+}
+
+.blog-post {
+    overflow: auto;
+    scroll-snap-type: both mandatory;
+    height: 80vh;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+
+table {
+    border-collapse: collapse;
+    border: 0;
+}
+
+th,
+td {
+    border: 1px solid #aaa;
+    background-clip: padding-box;
+    scroll-snap-align: start;
+}
+
+tbody tr:last-child th,
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+thead {
+    z-index: 1000;
+    position: relative;
+    background-color: rgb(208, 207, 211);
+    /* background-color: red; */
+}
+
+th,
+td {
+    padding: 0.6rem;
+    min-width: 6rem;
+    text-align: center;
+    margin: 0;
+    font-size: xx-small;
+}
+
+thead th {
+
+    top: 0;
+    border-top: 0;
+    background-clip: padding-box;
+}
+
+thead th.pin {
+    left: 0;
+    z-index: 1001;
+}
+
+tbody th {
+    background-clip: padding-box;
+    border-left: 0;
+}
+
+tbody {
+    z-index: 10;
+    position: relative;
+    background-color: #f8f8f8;
+}
+
+tbody th {
+    position: sticky;
+    left: 0;
+}
+
+thead th,
+tbody th {
+    background-color: #aaa;
+    border: 1px solid gainsboro;
+    /* background-color: red; */
+}
+
+tr th:first-child {
+    width: 6%;
+}
+
+tr th:nth-child(2) {
+    width: 55%;
+}
+
+tr th:nth-child(3) {
+    width: 13%;
+}
+
+tr th:nth-child(4) {
+    width: 13%;
+}
+
+tr th:nth-child(5) {
+    width: 13%;
+}
+
+.btn {
+    color: blue;
+    border: 1px solid blue;
+    border-radius: 20%;
+
+    box-sizing: border-box;
+}
+
+.blog-pagination .btn-outline-primary {
+    color: blue;
+    border: 1px solid blue;
+    border-radius: 20%;
+
+    box-sizing: border-box;
+}
+
+.blog-pagination {
+    border-top: 1px solid gray;
+    background-color: #f8f8f8;
+    text-align: left;
+}
+
+.write-up {
+    text-align: right;
+    padding-right: 30px;
+}
+
+.title-input {
+    width: 100%;
+}
+
+.text-input {
+    width: 100%;
+}
+
+.title-input .form-control {
+    width: 50%;
+}
+
+.text-input .form-control {
+    width: 100%;
+    height: 300px;
+}
+.signup{
+    width: 100%;
+    margin-top:20;
+}
+.signup form div input{
+    width: 35%;
+}
+.signup form{
+    margin:40px;
+    background-color: #f8f8f8;
+    text-align: left;
+    padding-left: 35%;
+    border-radius: 50px;
+}
+.signupBtn{
+    text-align: right;
+    padding-right: 10%;
+}
+.welcome{
+    color:blue;
+    font-weight: bold;
+
+}
+.page{
+    width: 90%;
+}
+.page > div{
+    width: 90%;
+}
+.page > div > ul {
+	text-align:center;
+    width: 90%;
+    margin-left: 100px;
+}
+.page > div > ul > li {
+	display:inline;
+	
+    
+}
+.page > div > ul > li > a {
+	display:-moz-inline-stack;	/*FF2*/
+	display:inline-block;
+	vertical-align:top;
+	padding:4px;
+	margin-right:3px;
+	width:15px;
+	color:#000;
+	font:bold 12px tahoma;
+	border:1px solid #eee;
+	text-align:center;
+	text-decoration:none;
+	width /**/:26px;	/*IE 5.5*/
+    background-color: #f8f8f8;
+
+}
+.page > div > ul > li > a.now {
+	color:#fff;
+	background-color:#f40;
+	border:1px solid #f40;
+}
+.page > div > ul > li > a:hover, ul > li > a:focus {
+	color:#fff;
+	border:1px solid #f40;
+	background-color:#f40;
+}
