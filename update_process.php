@@ -22,6 +22,6 @@ content = '$content'
 WHERE
 bid=$bid
 ";
-Sqlexe($conn,$sql);
+SqlexeUpdate($conn,$sql);
 
 ?>

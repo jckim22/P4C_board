@@ -29,6 +29,6 @@ if(isset($bid)){//bid가 있다는건 수정이라는 의미다.
 $sql="
 DELETE
 FROM board
-WHERE bid=$bid;
-";
+WHERE bid=$bid; 
+";//status값을 바꿔주고 숨기는 방법이 있지만 일단은 삭제하겠다.
 Sqlexe($conn,$sql);

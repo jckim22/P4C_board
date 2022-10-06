@@ -33,6 +33,22 @@ function Sqlexe($conn, $sql)
 
     return $result;
 }
+function SqlexeUpdate($conn, $sql)
+{
+    if ($result = $conn->query($sql)) {
+
+        echo "<script>alert('성공했습니다.');
+        window.location.reload();
+        </script>";
+    } else {
+        echo "<script>
+        alert('에러가 발생했습니다. 관리자에게 문의 주세요. (010-2856-4221)');
+        </script>";
+        error_log(mysqli_error($conn));
+    }
+
+    return $result;
+}
 function SqlexeMember($conn, $sql)
 {
     if ($result = $conn->query($sql)) {
