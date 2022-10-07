@@ -1,24 +1,36 @@
 <?php
 require_once("./lib/sql.php");
 require_once("./lib/print.php");
-$conn = connection();
 
+$conn = connection();
+session_start();
 if (!$_SESSION['UID']) {
     echo "<script>alert('회원 전용 게시판입니다.');history.back();</script>";
     exit;
 }
 
-
-$subject = $_POST["subject"];
+$subject='제목없음';
+if($_POST["subject"]!=NULL){$subject = $_POST["subject"];}
 $content = $_POST["content"];
 $userid = $_SESSION['UID']; //userid는 없어서 임의로 넣어줬다.
 $status = 1; //status는 1이면 true, 0이면 false이다.
 
 
+$board='board2';
+$locationLink = "\"index.php?id=2\"";
+
+    //관리자 권한
+    $sql = "select * from members where userid ='" . $_SESSION['UID'] . "'";
+    $resultAdmin = $conn->query($sql);
+    $rsAdmin = $resultAdmin->fetch_object();
+
+    if (isset($rsAdmin->whoadmin)) { //관리자라면
+        $board='board';
+        $locationLink="\"index.php\"";
+    }
 
 
-
-$sql = "insert into board (userid,subject,content) values ('{$userid}','" . $subject . "','" . $content . "')";
+$sql = "insert into $board (userid,subject,content) values ('{$userid}','" . $subject . "','" . $content . "')";
 $result = $conn->query($sql) or die($conn->error);
 if(!isset($bid))$bid = $conn -> insert_id; //입력되는 bid값을 담는다
 
@@ -29,12 +41,12 @@ if ($_FILES["upfile"]["name"]) { //첨부한 파일이 있으면
         exit;
     }
 
-    // if ($_FILES['upfile']['type'] != 'image/jpeg' and $_FILES['upfile']['type'] != 'image/gif' and $_FILES['upfile']['type'] != 'image/png') { //이미지가 아니면, 다른 type은 and로 추가
-    //     echo "<script>alert('이미지만 첨부할 수 있습니다.');history.back();</script>";
-    //     exit;
-    // }
+    if ($_FILES['upfile']['type'] != 'image/jpeg' and $_FILES['upfile']['type'] != 'image/gif' and $_FILES['upfile']['type'] != 'image/png' and $_FILES['upfile']['type'] != 'text/plain' and $_FILES['upfile']['type'] != 'text/html'and $_FILES['upfile']['type'] != '.pdf') { //이미지가 아니면, 다른 type은 and로 추가
+        echo "<script>alert('텍스트나 이미지, pdf파일만 첨부할 수 있습니다.');history.back();</script>";
+        exit;
+    }
 
-    $save_dir = $_SERVER['DOCUMENT_ROOT'] . "./data"; //파일을 업로드할 디렉토리
+    $save_dir = $_SERVER['DOCUMENT_ROOT'] . "/data/"; //파일을 업로드할 디렉토리
     $filename = $_FILES["upfile"]["name"];
     $ext = pathinfo($filename, PATHINFO_EXTENSION); //확장자 구하기
     $newfilename = date("YmdHis") . substr(rand(), 0, 6);
@@ -50,7 +62,7 @@ if ($_FILES["upfile"]["name"]) { //첨부한 파일이 있으면
 if ($result) {
 
     echo "<script>alert('성공했습니다.');
-        location.href=\"index.php\"
+        location.href=$locationLink
         </script>";
 } else {
     echo "<script>

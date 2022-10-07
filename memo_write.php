@@ -3,7 +3,7 @@ ini_set( 'display_errors', '0' );
 require_once("./lib/sql.php");
 require_once("./lib/print.php");
 $mysqli=connection();
-
+session_start();
 
 if (!$_SESSION['UID']) {
     echo "member";

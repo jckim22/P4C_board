@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Serif+KR&display=swap');
+
+
+
+body {
+    font-family: 'Nanum Pen Script', cursive;
+    font-family: 'Noto Serif KR', serif;
+}
+
 .blog-pagination {
     border-top: 1px solid gray;
     background-color: #f8f8f8;
@@ -5,6 +14,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
 html {
 
     background: url(https://mblogthumb-phinf.pstatic.net/20110323_91/muzzee_13008792098823XfSF_JPEG/_DSC1202.jpg?type=w2) no-repeat center center fixed;
@@ -113,7 +123,7 @@ footer p {
 .primary {
     overflow: auto;
     scroll-snap-type: both mandatory;
-    height: 75vh;
+    height: 89vh;
     padding: 20px;
 }
 
@@ -129,6 +139,7 @@ footer p {
 table {
     border-collapse: collapse;
     border: 0;
+    width: 100%;
 }
 
 th,
@@ -153,14 +164,12 @@ thead {
 th,
 td {
     padding: 0.6rem;
-    min-width: 6rem;
     text-align: center;
     margin: 0;
     font-size: xx-small;
 }
 
 thead th {
-
     top: 0;
     border-top: 0;
     background-clip: padding-box;
@@ -183,7 +192,6 @@ tbody {
 }
 
 tbody th {
-    position: sticky;
     left: 0;
 }
 
@@ -252,79 +260,119 @@ tr th:nth-child(5) {
     width: 100%;
     height: 300px;
 }
-.signup{
+
+.signup {
     width: 100%;
-    margin-top:20;
+    margin-top: 20;
 }
-.signup form div input{
+
+.signup form div input {
     width: 35%;
 }
-.signup form{
-    margin:40px;
+
+.signup form {
+    margin: 40px;
     background-color: #f8f8f8;
     text-align: left;
     padding-left: 35%;
     border-radius: 50px;
 }
-.signupBtn{
+
+.signupBtn {
     text-align: right;
     padding-right: 10%;
 }
-.welcome{
-    color:blue;
+
+.welcome {
+    color: blue;
     font-weight: bold;
 
 }
-.page{
+
+.page {
     width: 90%;
 }
-.page > div{
+
+.page>div {
     width: 90%;
 }
-.page > div > ul {
-	text-align:center;
+
+.page>div>ul {
+    text-align: center;
     width: 90%;
     margin-left: 100px;
 }
-.page > div > ul > li {
-	display:inline;
-	
-    
+
+.page>div>ul>li {
+    display: inline;
+
+
 }
-.page > div > ul > li > a {
-	display:-moz-inline-stack;	/*FF2*/
-	display:inline-block;
-	vertical-align:top;
-	padding:4px;
-	margin-right:3px;
-	width:15px;
-	color:#000;
-	font:bold 12px tahoma;
-	border:1px solid #eee;
-	text-align:center;
-	text-decoration:none;
-	width /**/:26px;	/*IE 5.5*/
+
+.page>div>ul>li>a {
+    display: -moz-inline-stack;
+    /*FF2*/
+    display: inline-block;
+    vertical-align: top;
+    padding: 4px;
+    margin-right: 3px;
+    width: 15px;
+    color: #000;
+    font: bold 12px tahoma;
+    border: 1px solid #eee;
+    text-align: center;
+    text-decoration: none;
+    width
+    /**/
+    : 26px;
+    /*IE 5.5*/
     background-color: #f8f8f8;
 
 }
-.page > div > ul > li > a.now {
-	color:#fff;
-	background-color:#f40;
-	border:1px solid #f40;
+
+.page>div>ul>li>a.now {
+    color: #fff;
+    background-color: #f40;
+    border: 1px solid #f40;
 }
-.page > div > ul > li > a:hover, ul > li > a:focus {
-	color:#fff;
-	border:1px solid #f40;
-	background-color:#f40;
+
+.page>div>ul>li>a:hover,
+ul>li>a:focus {
+    color: #fff;
+    border: 1px solid #f40;
+    background-color: #f40;
 }
-.commentBox{
+
+.commentBox {
     border-top: 1px solid gray;
-    width:200px;
+    width: 200px;
     background-color: white;
 }
-.commentBox4{
+
+.commentBox4 {
     border-bottom: 1px solid gray;
 }
-.commentBox6{
+
+.commentBox6 {
     color: blueviolet;
+}
+@media(max-width:800px) {
+    .con {
+        display: block;
+
+    }
+
+    h1 {
+        font-size: 50px;
+    }
+
+    .con ol {
+        border-right: none;
+        margin-left: 40%;
+        text-align: center;
+
+    }
+	footer{
+		display:none;
+	}
 }

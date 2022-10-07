@@ -4,9 +4,9 @@ function connection()
 {
 
     $hostname = "localhost";
-    $dbuserid = "root";
-    $dbpasswd = "798200";
-    $dbname = "article";
+    $dbuserid = "jckim2";
+    $dbpasswd = "wncks4545!";
+    $dbname = "jckim2";
 
 
     $mysqli = new mysqli($hostname, $dbuserid, $dbpasswd, $dbname);
@@ -38,7 +38,7 @@ function SqlexeUpdate($conn, $sql)
     if ($result = $conn->query($sql)) {
 
         echo "<script>alert('성공했습니다.');
-        window.location.reload();
+        location.href=\"index.php\";
         </script>";
     } else {
         echo "<script>

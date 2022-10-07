@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0');
+session_start();
 require_once(".././lib/sql.php");
 require_once(".././lib/print.php");
 $conn = connection();
@@ -10,6 +12,9 @@ $rsc = get_table($conn, $sql);
 <html lang="en">
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Serif+KR&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +27,8 @@ $rsc = get_table($conn, $sql);
     <script src="../script.js"></script>
 </head>
 
-<body>
+<body style="font-family: 'Nanum Pen Script', cursive;
+font-family: 'Noto Serif KR', serif;">
     <header align=center>
         <h1>
             <a href="../index.php">Jckim2</a>
@@ -36,8 +42,8 @@ $rsc = get_table($conn, $sql);
     <div class="con">
         <div class="aside">
             <p>LIST</p>
-            <ol>
-                <li><a href="../index.php">공지사항</a></li>
-                <li><a href="../board.php">자유게시판</a></li>
+            <ol style="color:white">
+                <li style="color:white"><a href="index.php">공지사항</a></li>
+                <li style="color:white"><a href="index.php?id=2">자유게시판</a></li>
             </ol>
         </div>

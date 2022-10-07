@@ -6,14 +6,20 @@ ini_set('display_errors', '0');
 $conn = connection();
 $bid = $_GET['bid'];
 
-$result = $conn->query("select * from board where bid=" . $bid) or die("query error => " . $conn->error);
+$board = 'board';
+
+if (isset($_GET['id'])) {
+    $board = 'board2';
+}
+
+$result = $conn->query("select * from $board where bid=" . $bid) or die("query error => " . $conn->error);
 $rs = $result->fetch_object();
 
 $resultL = $conn->query("select count(*) as cnt from recommend where type='like' and bid=" . $bid) or die("query error => " . $conn->error); //해당 게시물에 추천이나 반대가 몇개인지 확인
 $rsL = $resultL->fetch_object();
 $resultH = $conn->query("select count(*) as cnt from recommend where type='hate' and bid=" . $bid) or die("query error => " . $conn->error); //해당 게시물에 추천이나 반대가 몇개인지 확인
 $rsH = $resultH->fetch_object();
-$resultF = $conn->query("select * from board LEFT JOIN file_table ON board.bid = file_table.bid");
+$resultF = $conn->query("select * from file_table where bid=" . $bid) or die("query error => " . $conn->error);
 $rsF = $resultF->fetch_object();
 
 $query = "select * from memo where status=1 and bid=" . $rs->bid . " order by memoid asc";
@@ -23,8 +29,28 @@ while ($mrs = $memo_result->fetch_object()) {
 }
 
 
-$sql = "update board set views=views+1 where bid=$bid";
-$conn->query($sql);
+// 쿠키가 없는 경우 생성 후 조회수 증가
+$is_count = false;
+if (!isset($_COOKIE["board_{$bid}"])) {    
+    setcookie("board_{$bid}", $bid, time() + 3600);
+    $is_count = true;
+}
+
+if ($is_count) {
+    $sql = "
+        UPDATE $board SET
+            views = views + 1
+        WHERE bid = $bid
+    ";
+    $conn->query($sql);
+    
+
+
+//     if ($result == 0) {    // UPDATE는 변경된 row의 개수 반환
+//         exit(header('Location: /index.php?msg=Wrong_board_ID'));
+//     }
+}
+
 ?>
 
 <div bottom=0; class="article">
@@ -44,10 +70,9 @@ $conn->query($sql);
             <p>
                 <?php echo $rs->content; ?>
             </p>
+            <hr>
             <div>
-                파일 : <a style="text-decoration: underline; color:blue; font-size:small;"
-                
-                href="./data/<?php echo $rsF->filename;?>" download><?php echo $rsF->filename; ?></a>
+                파일 : <a style="text-decoration: underline; color:blue; font-size:small;" href="./data/<?php echo $rsF->filename;?>" download><?=$rsF->filename; ?></a>
             </div>
         </div>
     </div>

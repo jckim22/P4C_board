@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '0');
+session_start();
 require_once(".././lib/sql.php");
 require_once(".././lib/print.php");
 $conn = connection();

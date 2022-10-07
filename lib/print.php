@@ -19,4 +19,13 @@ function get_table_row($conn)
     $rs = $result->fetch_object();
     return $rs;
 }
+
+function get_title($conn){
+    $mainTitle = '공지사항';
+
+    if(isset($_GET['id'])){
+        $mainTitle = '자유게시판';
+    }
+    return $mainTitle;
+}
 ?>

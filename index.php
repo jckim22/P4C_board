@@ -2,10 +2,23 @@
 <?php require_once("./view/top.php");
 require_once("./lib/print.php");
 require_once("./lib/sql.php");
-
+ini_set('display_errors', '0');
 $conn = connection();
 
 unset($rsc);
+
+$board = 'board';
+
+$mainTitle = '공지사항';
+
+if (isset($_GET['id'])) {
+    $mainTitle = '자유게시판';
+    $pageId = "?id=2";
+}
+
+if (isset($_GET['id'])) {
+    $board = 'board2';
+}
 
 $pageNumber  = $_GET['pageNumber'] ?? 1; //현재 페이지, 없으면 1
 if ($pageNumber < 1) $pageNumber = 1; //페이지 넘버가 1보다 작으면 1이되게 한다 (이전을 눌렀을 때 -값이 되는 것을 대비)
@@ -17,7 +30,7 @@ $sql = "select b.*, if((now() - regdate)<=86400,1,0) as newid
 ,(select count(*) from memo m where m.status=1 and m.bid=b.bid) as memocnt
 ,(select m.regdate from memo m where m.status=1 and m.bid=b.bid order by m.memoid desc limit 1) as memodate
 ,(select count(*) from file_table f where f.status=1 and f.bid=b.bid) as filecnt
-from board b where 1=1";
+from $board b where 1=1";
 $sql .= " and status=1";
 $order = " order by bid desc";
 $limit = " limit $startLimit, $pageCount";
@@ -27,13 +40,15 @@ if (isset($_GET['search_keyword'])) {
 
     unset($rsc);
 
+
+
     $search_keyword = $_GET['search_keyword'];
-    $search_where = " and (subject like '%" . $search_keyword . "%' or content like '%" . $search_keyword . "%')";
+    $search_where = " and (" . $_GET['category'] . " like '%" . $search_keyword . "%')";
     $sql = "select b.*, if((now() - regdate)<=86400,1,0) as newid
     ,(select count(*) from memo m where m.status=1 and m.bid=b.bid) as memocnt
     ,(select m.regdate from memo m where m.status=1 and m.bid=b.bid order by m.memoid desc limit 1) as memodate
     ,(select count(*) from file_table f where f.status=1 and f.bid=b.bid) as filecnt
-    from board b where 1=1";
+    from $board b where 1=1";
     $sql .= " and status=1";
     $sql .= $search_where;
     $order = " order by bid desc";
@@ -46,7 +61,7 @@ if (isset($_GET['search_keyword'])) {
 }
 
 //전체게시물 수 구하기
-$sqlcnt = "select count(*) as cnt from board where 1=1";
+$sqlcnt = "select count(*) as cnt from $board where 1=1";
 $sqlcnt .= " and status=1";
 if (isset($_GET['search_keyword'])) {
     $sqlcnt .= $search_where;
@@ -60,7 +75,7 @@ if ($firstPageNumber < 1) $firstPageNumber = 1;
 $lastPageNumber = $firstPageNumber + $pageCount - 1; //페이징 나오는 부분에서 레인지를 정한다.
 if ($lastPageNumber > $totalPage) $lastPageNumber = $totalPage;
 
-if ($firstPageNumber > $totalPage) {
+if ($firstPageNumber > $totalPage and $firstPageNumber != $totalPage) {
     echo "<script>alert('더 이상 페이지가 없습니다.');history.back();</script>";
     exit;
 }
@@ -69,9 +84,9 @@ if ($firstPageNumber > $totalPage) {
 
 <div class="article">
     <div class="ListType">
-        <h1>공지사항</h1>
+        <h1 style="color:white"><?= $mainTitle ?></h1>
     </div>
-    <div role="region" aria-label="data table" tabindex="0" class="primary">
+    <div role="region" style="height: 89vh" aria-label="data table" tabindex="0" class="primary">
         <table id="products" style=border:1>
             <thead>
                 <tr>
@@ -95,7 +110,7 @@ if ($firstPageNumber > $totalPage) {
                 ?>
                     <tr>
                         <th><?= $idNumber--; ?></th>
-                        <td> <a href="/view.php?bid=<?php echo $r->bid; ?>"><?php echo $subject ?></a>
+                        <td> <a href="/view.php<?php if(isset($_GET['id'])){echo "?id=".$_GET['id']."&";}else{echo "?";}?>bid=<?php echo $r->bid; ?>"><?php echo $subject ?></a>
                             <?php if ($r->filecnt) { ?>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
                                     <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
@@ -124,7 +139,7 @@ if ($firstPageNumber > $totalPage) {
             <div aria-label="Page navigation example">
                 <ul>
                     <li>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?pageNumber=<?php echo $firstPageNumber - $pageCount; ?>&firstPageNumber=<?php echo $firstPageNumber - $pageCount;
+                        <a href="<?php echo $_SERVER['PHP_SELF'];if(isset($_GET['id'])){echo $pageId;}?>&pageNumber=<?php echo $firstPageNumber - $pageCount; ?>&firstPageNumber=<?php echo $firstPageNumber - $pageCount;
                                                                                                                                             if (isset($_GET['search_keyword'])) { ?>&search_keyword=<?php echo $search_keyword;
                                                                                                                                                                                                 } ?>">이전</a>
                     </li>
@@ -133,14 +148,14 @@ if ($firstPageNumber > $totalPage) {
                     ?>
                         <li <?php if ($pageNumber == $i) {
                                 echo "active";
-                            } ?>><a href="<?php echo $_SERVER['PHP_SELF'] ?>?pageNumber=<?php echo $i; ?>&firstPageNumber=<?php echo $firstPageNumber;
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF'];if(isset($_GET['id'])){echo $pageId;}?>&pageNumber=<?php echo $i; ?>&firstPageNumber=<?php echo $firstPageNumber;
                                                                                                                             if (isset($_GET['search_keyword'])) { ?>&search_keyword=<?php echo $search_keyword;
-                                                                                                                                                                                            } ?>"><?php echo $i; ?></a></li>
+                                                                                                                                                                                } ?>"><?php echo $i; ?></a></li>
                     <?php
                     }
                     ?>
                     <li>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?pageNumber=<?php echo $firstPageNumber + $pageCount; ?>&firstPageNumber=<?php echo $firstPageNumber + $pageCount;
+                        <a href="<?php echo $_SERVER['PHP_SELF'];if(isset($_GET['id'])){echo $pageId;} ?>&pageNumber=<?php echo $firstPageNumber + $pageCount; ?>&firstPageNumber=<?php echo $firstPageNumber + $pageCount;
                                                                                                                                             if (isset($_GET['search_keyword'])) { ?>&search_keyword=<?php echo $search_keyword;
                                                                                                                                                                                                 } ?>">다음</a>
                     </li>
@@ -153,7 +168,13 @@ if ($firstPageNumber > $totalPage) {
             if (isset($_SESSION['UID'])) {
             ?>
         <div class="write-up" style="float:right;padding:20px;">
-            <a href="write.php"><button type="button">글쓰기</button></a>
+            <a href=<?php
+                    if (isset($_GET['id'])) {
+                        echo "write.php?id=2";
+                    } else {
+                        echo "write.php";
+                    }
+                    ?>><button type="button">글쓰기</button></a>
             <a href="./member/logout.php"><button type="button">로그아웃</button></a>
         </div>
     <?php
@@ -166,15 +187,23 @@ if ($firstPageNumber > $totalPage) {
     <?php
             }
     ?>
-    <form method="get" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-        <div style="padding-left: 220px; margin:auto;width:50%;">
-            <input type="text" style="width : 50%;" name="search_keyword" id="search_keyword" placeholder="제목과 내용에서 검색합니다." value="<?php if (isset($_GET['search_keyword'])) {
+    <form method="get" action="<?= $_SERVER['PHP_SELF'] ?>">
+        <div style="padding-left: 136px; margin:auto;width:50%;">
+            <?php if (isset($_GET['id'])) { ?>
+                <input type="hidden" name="id" value=<?$_GET['id']?>>   
+            <?php } ?>
+            <select name="category">
+                <option value="subject">제목</option>
+                <option value="userid">글쓴이</option>
+                <option value="content">내용</option>
+            </select>
+            <input type="text" style="width : 50%;" name="search_keyword" id="search_keyword" placeholder="검색할 키워드를 입력해주세요." value="<?php if (isset($_GET['search_keyword'])) {
                                                                                                                                         echo $search_keyword;
                                                                                                                                     } ?>" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn" type="submit" id="button-addon2">검색</button>
         </div>
     </form>
-    < </div>
-
     </div>
-    <?php require_once("./view/bottom.php") ?>
+
+</div>
+<?php require_once("./view/bottom.php") ?>
