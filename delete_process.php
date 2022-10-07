@@ -14,8 +14,7 @@ $id = $_POST['id'];
 
 if (isset($bid)) {
 
-    $result = $conn->query("select * from $board where bid=" . $bid) or die("query error => " . $conn->error);
-    $rs = $result->fetch_object();
+
 
     //관리자 권한
     $sql = "select * from members where userid ='".$_SESSION['UID']."'";
@@ -38,6 +37,10 @@ if (isset($bid)) {
         exit;
     }
     
+    $board='board2';
+    $result = $conn->query("select * from $board where bid=" . $bid) or die("query error => " . $conn->error);
+    $rs = $result->fetch_object();
+
     //본인인지 확인
     if ($rs->userid != $_SESSION['UID']) {
         echo "<script>alert('본인 글이 아니면 삭제할 수 없습니다.');history.back();</script>";
@@ -45,10 +48,6 @@ if (isset($bid)) {
     }
 }
 
-
-
-
-$board='board2';
 $sql = "
 DELETE
 FROM $board
