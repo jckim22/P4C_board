@@ -8,9 +8,11 @@ if (!$_SESSION['UID']) {
 }
 $bid=$_GET["bid"];
 
+$board='board2';
+
 if(isset($bid)){//bid가 있다는건 수정이라는 의미다.
 
-    $result = $conn->query("select * from board where bid=".$bid) or die("query error => ".$conn->error);
+    $result = $conn->query("select * from $board where bid=".$bid) or die("query error => ".$conn->error);
     $rs = $result->fetch_object();
 
     if($rs->userid!=$_SESSION['UID']){

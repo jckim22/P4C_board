@@ -92,6 +92,7 @@ if ($is_count) {
                         }
                         ">
                     <input type="hidden" name='bid' value="<?= $bid ?>">
+                    <input type="hidden" naem='id' value="<?=$_GET['id']?>">
                     <input type="submit" value="삭제">
                 </form>
 

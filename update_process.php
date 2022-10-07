@@ -9,10 +9,10 @@ if (!$_SESSION['UID']) {
     exit;
 }
 $bid = $_POST["bid"];
+$subject = $_POST["subject"];
+$content = $_POST["content"];
 
-
-$result = $conn->query("select * from board where bid=" . $bid) or die("query error => " . $conn->error);
-$rs = $result->fetch_object();
+$board='board2';
 
 //관리자 권한
 $sql = "select * from members where userid ='" . $_SESSION['UID'] . "'";
@@ -30,21 +30,20 @@ if (isset($rsAdmin->whoadmin)) { //관리자라면
     exit;
 }
 
+$result = $conn->query("select * from $board where bid=" . $bid) or die("query error => " . $conn->error);
+$rs = $result->fetch_object();
+
 //본인인지 확인
 if ($rs->userid != $_SESSION['UID']) {
-    echo "<script>alert('본인 글이 아니면 삭제할 수 없습니다.');history.back();</script>";
+    echo "<script>alert('본인 글이 아니면 수정할 수 없습니다.');history.back();</script>";
     exit;
 }
 
 
-
-$subject = $_POST["subject"];
-$content = $_POST["content"];
-
 $userid = $_SESSION['UID']; //userid는 없어서 임의로 넣어줬다.
 $status = 1; //status는 1이면 true, 0이면 false이다.
 
-$sql = "UPDATE board
+$sql = "UPDATE $board
 SET
 subject = '$subject',
 content = '$content'
