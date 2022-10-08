@@ -15,9 +15,16 @@ $passwd=hash('sha512',$passwd);
 
 $sql = "select * from members where userid='".$userid."' and passwd='".$passwd."'";
 
+
 $result = $conn->query($sql);
 
 $rs=$result->fetch_object();
+
+if($rs->active!=1){
+    echo "<script>alert('계정이 활성화 되지 않았습니다. 이메일 확인 후 활성화 해주세요 !');history.back();</script>";
+    exit;
+}
+
 
 if($rs){
     $_SESSION['UID']= $rs->userid;

@@ -53,13 +53,17 @@ function SqlexeMember($conn, $sql)
 {
     if ($result = $conn->query($sql)) {
 
-        echo "<script>alert('성공했습니다.');
+        echo "<script>alert('계정 생성 ! 이메일을 확인하여 계정을 활성해주세요 !');
         location.href='../index.php'
         </script>";
     } else {
-        echo "<script>
-        alert('에러가 발생했습니다. 관리자에게 문의 주세요. (010-2856-4221)');
-        </script>";
+        // echo "<script>
+        // alert('에러가 발생했습니다. 관리자에게 문의 주세요. (010-2856-4221)');
+        // location.href='../index.php'
+        // </script>";
+        
+        echo(mysqli_error($conn));
+
         error_log(mysqli_error($conn));
     }
 
