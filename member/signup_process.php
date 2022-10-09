@@ -51,8 +51,8 @@ $mail->Host = "smtp.gmail.com";
 $mail->SMTPAuth = true;
 $mail->Port = 465;
 $mail->SMTPSecure = "ssl";
-$mail->Username   = "jckim229@gmail.com";
-$mail->Password   = "weulayvxmlgdclsj";
+$mail->Username   = "My Email";
+$mail->Password   = "My Email Passwd";
 $mail->CharSet = "utf-8";
 
 $mail->SetFrom('uz.56764@gmail.com', 'email verify');

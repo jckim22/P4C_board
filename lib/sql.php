@@ -4,8 +4,8 @@ function connection()
 {
 
     $hostname = "localhost";
-    $dbuserid = "jckim2";
-    $dbpasswd = "wncks4545!";
+    $dbuserid = "DBid";
+    $dbpasswd = "DBpasswd";
     $dbname = "jckim2";
 
 
